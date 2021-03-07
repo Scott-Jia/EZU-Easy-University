@@ -1,0 +1,41 @@
+{% extends 'courseinfo/base.html' %}
+
+{% block title %}
+    Registration - {{ registration }}
+{% endblock %}
+
+{% block content %}
+    <h2>{{ registration }}</h2>
+
+    <section>
+        <table>
+            <tr>
+                <th>Student:</th>
+                <td>{{ registration.student }}</td>
+            </tr>
+            <tr>
+                <th>Section:</th>
+                <td>{{ registration.section }}</td>
+            </tr>
+{#            {% if instructor.disambiguator %}#}
+{#                <tr>#}
+{#                    <th>Disambiguator:</th>#}
+{#                    <td>{{ instructor.disambiguator }}</td>#}
+{#                </tr>#}
+{#            {% endif %}#}
+        </table>
+    </section>
+
+{#    <section>#}
+{#        <h3>Sections</h3>#}
+{#        <ul>#}
+{#            {% for section in section_list %}#}
+{#                <li>#}
+{#                    <a href="">{{ section }}</a>#}
+{#                </li>#}
+{#            {% empty %}#}
+{#                <li><em>There are currently no sections for this instructor.</em></li>#}
+{#            {% endfor %}#}
+{#        </ul>#}
+{#    </section>#}
+{% endblock %}
