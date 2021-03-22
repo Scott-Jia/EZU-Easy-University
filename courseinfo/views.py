@@ -1,7 +1,9 @@
 from django.shortcuts import render, get_object_or_404
 from django.views import View
 
+from courseinfo.forms import InstructorForm, RegistrationForm, StudentForm, SemesterForm, CourseForm, SectionForm
 from courseinfo.models import Instructor, Section, Course, Semester, Student, Registration
+from courseinfo.utils import ObjectCreateMixin
 
 
 class InstructorList(View):
@@ -25,6 +27,11 @@ class InstructorDetail(View):
             'courseinfo/instructor_detail.html',
             {'instructor': instructor, 'section_list': section_list}
         )
+
+
+class InstructorCreate(ObjectCreateMixin, View):
+    form_class = InstructorForm
+    template_name = 'courseinfo/instructor_form.html'
 
 
 class SectionList(View):
@@ -57,6 +64,11 @@ class SectionDetail(View):
         )
 
 
+class SectionCreate(ObjectCreateMixin, View):
+    form_class = SectionForm
+    template_name = 'courseinfo/section_form.html'
+
+
 class CourseList(View):
     def get(self, request):
         return render(
@@ -78,6 +90,11 @@ class CourseDetail(View):
             'courseinfo/course_detail.html',
             {'course': course, 'section_list': section_list}
         )
+
+
+class CourseCreate(ObjectCreateMixin, View):
+    form_class = CourseForm
+    template_name = 'courseinfo/course_form.html'
 
 
 class SemesterList(View):
@@ -103,6 +120,11 @@ class SemesterDetail(View):
         )
 
 
+class SemesterCreate(ObjectCreateMixin, View):
+    form_class = SemesterForm
+    template_name = 'courseinfo/semester_form.html'
+
+
 class StudentList(View):
     def get(self, request):
         return render(
@@ -126,6 +148,11 @@ class StudentDetail(View):
         )
 
 
+class StudentCreate(ObjectCreateMixin, View):
+    form_class = StudentForm
+    template_name = 'courseinfo/student_form.html'
+
+
 class RegistrationList(View):
     def get(self, request):
         return render(
@@ -146,4 +173,9 @@ class RegistrationDetail(View):
             'courseinfo/registration_detail.html',
             {'registration': registration}
         )
+
+
+class RegistrationCreate(ObjectCreateMixin, View):
+    form_class = RegistrationForm
+    template_name = 'courseinfo/registration_form.html'
 

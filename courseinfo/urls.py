@@ -28,6 +28,12 @@ from courseinfo.views import (
     SemesterDetail,
     StudentDetail,
     RegistrationDetail,
+    InstructorCreate,
+    SectionCreate,
+    RegistrationCreate,
+    StudentCreate,
+    CourseCreate,
+    SemesterCreate,
 )
 
 urlpatterns = [
@@ -40,6 +46,9 @@ urlpatterns = [
          InstructorDetail.as_view(),
          name='courseinfo_instructor_detail_urlpattern'),
 
+    path('instructor/create/',
+         InstructorCreate.as_view(),
+         name='courseinfo_instructor_create_urlpattern'),
 
     path('section/',
          SectionList.as_view(),
@@ -49,6 +58,10 @@ urlpatterns = [
          SectionDetail.as_view(),
          name='courseinfo_section_detail_urlpattern'),
 
+    path('section/create/',
+         SectionCreate.as_view(),
+         name='courseinfo_section_create_urlpattern'),
+
     path('course/',
          CourseList.as_view(),
          name='courseinfo_course_list_urlpattern'),
@@ -56,6 +69,10 @@ urlpatterns = [
     path('course/<int:pk>/',
          CourseDetail.as_view(),
          name='courseinfo_course_detail_urlpattern'),
+
+    path('course/create/',
+         CourseCreate.as_view(),
+         name='courseinfo_course_create_urlpattern'),
 
     path('semester/',
          SemesterList.as_view(),
@@ -65,6 +82,10 @@ urlpatterns = [
          SemesterDetail.as_view(),
          name='courseinfo_semester_detail_urlpattern'),
 
+    path('semester/create/',
+         SemesterCreate.as_view(),
+         name='courseinfo_semester_create_urlpattern'),
+
     path('student/',
          StudentList.as_view(),
          name='courseinfo_student_list_urlpattern'),
@@ -73,6 +94,9 @@ urlpatterns = [
          StudentDetail.as_view(),
          name='courseinfo_student_detail_urlpattern'),
 
+    path('student/create/',
+         StudentCreate.as_view(),
+         name='courseinfo_student_create_urlpattern'),
 
     path('registration/',
          RegistrationList.as_view(),
@@ -81,4 +105,8 @@ urlpatterns = [
     path('registration/<int:pk>/',
          RegistrationDetail.as_view(),
          name='courseinfo_registration_detail_urlpattern'),
+
+    path('registration/create/',
+         RegistrationCreate.as_view(),
+         name='courseinfo_registration_create_urlpattern'),
 ]
