@@ -7,8 +7,9 @@
 {% block content %}
     <h2>Section List</h2>
     <div>
-        <a href="{% url 'courseinfo_section_create_urlpattern' %}">
-            Create New Section</a>
+      <a href="{% url 'courseinfo_section_create_urlpattern' %}"
+      class="button button-primary">
+        Create New Section</a>
     </div>
     <ul>
         {% for section in section_list %}
@@ -20,5 +21,3 @@
         {% endfor %}
     </ul>
 {% endblock %}
-
-
