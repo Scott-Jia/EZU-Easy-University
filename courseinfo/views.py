@@ -1,7 +1,7 @@
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views import View
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 
 from courseinfo.forms import InstructorForm, RegistrationForm, StudentForm, SemesterForm, CourseForm, SectionForm
 from courseinfo.models import Instructor, Section, Course, Semester, Student, Registration
@@ -13,18 +13,15 @@ class InstructorList(PageLinksMixin, ListView):
     model = Instructor
 
 
-class InstructorDetail(View):
-    def get(self, request, pk):
-        instructor = get_object_or_404(
-            Instructor,
-            pk=pk
-        )
+class InstructorDetail(DetailView):
+    model = Instructor
+
+    def get_context_data(self, **kwargs):
+        context = super(DetailView, self).get_context_data(**kwargs)
+        instructor = self.get_object()
         section_list = instructor.sections.all()
-        return render(
-            request,
-            'courseinfo/instructor_detail.html',
-            {'instructor': instructor, 'section_list': section_list}
-        )
+        context['section_list'] = section_list
+        return context
 
 
 class InstructorCreate(ObjectCreateMixin, View):
@@ -107,25 +104,17 @@ class SectionList(ListView):
     model = Section
 
 
-class SectionDetail(View):
-    def get(self, request, pk):
-        section = get_object_or_404(
-            Section,
-            pk=pk
-        )
-        semester = section.semester
-        course = section.course
-        instructor = section.instructor
-        registration_list = section.registrations.all()
-        return render(
-            request,
-            'courseinfo/section_detail.html',
-            {'section': section,
-             'semester': semester,
-             'course': course,
-             'instructor': instructor,
-             'registration_list': registration_list}
-        )
+class SectionDetail(DetailView):
+    model = Section
+
+    def get_context_data(self, **kwargs):
+        context = super(DetailView, self).get_context_data(**kwargs)
+        section = self.get_object()
+        context['semester'] = section.semester
+        context['course'] = section.course
+        context['instructor'] = section.instructor
+        context['registration_list'] = section.registrations.all()
+        return context
 
 
 class SectionCreate(ObjectCreateMixin, View):
@@ -207,18 +196,15 @@ class CourseList(ListView):
     model = Course
 
 
-class CourseDetail(View):
-    def get(self, request, pk):
-        course = get_object_or_404(
-            Course,
-            pk=pk
-        )
+class CourseDetail(DetailView):
+    model = Course
+
+    def get_context_data(self, **kwargs):
+        context = super(DetailView, self).get_context_data(**kwargs)
+        course = self.get_object()
         section_list = course.sections.all()
-        return render(
-            request,
-            'courseinfo/course_detail.html',
-            {'course': course, 'section_list': section_list}
-        )
+        context['section_list'] = section_list
+        return context
 
 
 class CourseCreate(ObjectCreateMixin, View):
@@ -300,18 +286,15 @@ class SemesterList(ListView):
     model = Semester
 
 
-class SemesterDetail(View):
-    def get(self, request, pk):
-        semester = get_object_or_404(
-            Semester,
-            pk=pk
-        )
+class SemesterDetail(DetailView):
+    model = Semester
+
+    def get_context_data(self, **kwargs):
+        context = super(DetailView, self).get_context_data(**kwargs)
+        semester = self.get_object()
         section_list = semester.sections.all()
-        return render(
-            request,
-            'courseinfo/semester_detail.html',
-            {'semester': semester, 'section_list': section_list}
-        )
+        context['section_list'] = section_list
+        return context
 
 
 class SemesterCreate(ObjectCreateMixin, View):
@@ -394,18 +377,15 @@ class StudentList(PageLinksMixin, ListView):
     model = Student
 
 
-class StudentDetail(View):
-    def get(self, request, pk):
-        student = get_object_or_404(
-            Student,
-            pk=pk
-        )
+class StudentDetail(DetailView):
+    model = Student
+
+    def get_context_data(self, **kwargs):
+        context = super(DetailView, self).get_context_data(**kwargs)
+        student = self.get_object()
         registration_list = student.registrations.all()
-        return render(
-            request,
-            'courseinfo/student_detail.html',
-            {'student': student, 'registration_list': registration_list}
-        )
+        context['registration_list'] = registration_list
+        return context
 
 
 class StudentCreate(ObjectCreateMixin, View):
@@ -487,17 +467,15 @@ class RegistrationList(ListView):
     model = Registration
 
 
-class RegistrationDetail(View):
-    def get(self, request, pk):
-        registration = get_object_or_404(
-            Registration,
-            pk=pk
-        )
-        return render(
-            request,
-            'courseinfo/registration_detail.html',
-            {'registration': registration}
-        )
+class RegistrationDetail(DetailView):
+    model = Registration
+
+    def get_context_data(self, **kwargs):
+        context = super(DetailView, self).get_context_data(**kwargs)
+        registration = self.get_object()
+        context['student'] = registration.student
+        context['section'] = registration.section
+        return context
 
 
 class RegistrationCreate(ObjectCreateMixin, View):
